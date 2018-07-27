@@ -49,6 +49,11 @@ def get_last_char(city):
 
 def game_iteration(sender, data):
     log_warn("got inside function")
+
+
+
+
+
     try:
         global check_give_up
         global lastLetter
@@ -122,5 +127,22 @@ addMessageListener("cities:play", game_iteration)
 
 #здесь мы связываем команду и событие    
 sendMessage("core:set-event-link", {"eventName": "speech:get", "commandName": "cities:play", "rule": "игра городки"})
+
+
+
+
+# plugin informations
+setConfigField("dependencies", "python3")
+setConfigField("author", "DeskChan Project <support@deskchan.info> (http://deskchan.info)")
+setConfigField("short-description", {
+                   "ru": "ДескЧан плагин: Игра в 'Города'",
+                   "en": "DeskChan plagin: game 'cities'"
+               })
+setConfigField("name", {
+                   "ru": "Игра в 'Города'",
+                   "en": "Game 'cities'"
+               })
+setConfigField("link", "https://forum.deskchan.info/topic/130/python-ygra-v-goroda")
+setConfigField("version", "0.7")
 
 end_init()
