@@ -144,6 +144,6 @@ setConfigField("name", {
                    "en": "Game 'cities'"
                })
 setConfigField("link", "https://forum.deskchan.info/topic/130/python-ygra-v-goroda")
-setConfigField("version", "0.7")
+setConfigField("version", "0.8")
 
 end_init()
