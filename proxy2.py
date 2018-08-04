@@ -156,7 +156,11 @@ class _ServerHandler(Thread):
             return
 
         if Type == 'setInfo':
-            self.doneInfo = first_line[1]
+            args = {}
+            for line in data[1:]:
+                line = line.split(' ', 1)
+                args[line[0]] = line[1]
+            self.doneInfo = args
             return
 
         if Type == 'call':
@@ -227,7 +231,7 @@ class Proxy:
         log_warn('server init')
         Proxy._server.start()
         log_warn('server started')
-        Proxy._pluginData = _deserialize(Proxy._wait())
+        Proxy._pluginData = Proxy._wait()
         log_warn('got data from server')
 
     @_log_err

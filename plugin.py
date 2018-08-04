@@ -46,12 +46,16 @@ def get_last_char(city):
     
     return city[i].upper()
 
+def get_city(letter):
+    copyCity = []
+    for city in cities:
+        if city[0] == letter and city not in citiesAlreadySaid:
+            copyCity.append(city)
+    return copyCity[random.randint(0, len(copyCity) - 1)]
+
 
 def game_iteration(sender, data):
     log_warn("got inside function")
-
-
-
 
 
     try:
@@ -94,16 +98,13 @@ def game_iteration(sender, data):
                     citiesAlreadySaid.append(cityUser)
                     lastLetter = get_last_char(cityUser)
                     sendMessage("DeskChan:say", {"text": "Молодец, правильно. Мне на " + lastLetter, "skippable": False})
-                    for city in cities:
-                        if city[0] != lastLetter or city in citiesAlreadySaid:
-                            continue
-                   
-                        nextCity = city
-                        lastLetter = get_last_char(nextCity)
-                        citiesAlreadySaid.append(nextCity)
-                        sendMessage("gui:set-image", "thoughtful")
-                        sendMessage('DeskChan:say', "Я говорю... " + nextCity + ". Твоя очередь. Тебе на " + lastLetter)
-                        break
+
+                    nextCity = get_city(lastLetter)
+                    lastLetter = get_last_char(nextCity)
+                    citiesAlreadySaid.append(nextCity)
+                    sendMessage("gui:set-image", "thoughtful")
+                    sendMessage('DeskChan:say', "Я говорю... " + nextCity + ". Твоя очередь. Тебе на " + lastLetter)
+
                 elif cityUser[0] != lastLetter:
                     sendMessage("DeskChan:say", {"text": "Ты назвал мне город не на ту букву! Я же сказала " + nextCity + " !", "skippable": False})
                 elif cityUser[0] == lastLetter and cityUser in citiesAlreadySaid:

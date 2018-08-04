@@ -113,8 +113,6 @@ class _ServerHandler(Thread):
     def run(self):
         while self.work:
             self.parse(stdin.readline()[0:-1])
-            #self.__out = codecs.getwriter("utf-8")(sys.stdin.readline()[0:-1])
-            #self.parse(codecs.getreader("utf-8")(sys.stdin.readline()[0:-1]))
             time.sleep(0.05)
 
     def lock(self):
@@ -130,18 +128,20 @@ class _ServerHandler(Thread):
 
     def parse(self, data):
         data = data.strip()
-        # Ist für die Anzeige des commandName "cities:play" verantwortlich
         log_info("~ "+data)
-        #log_info("- "+data)
         if data != '#':
             self.buffer.append(data)
             return
         
         log_warn("parsing received message")
         data = self.buffer
+        log_warn("1")
         self.buffer = []
+        log_warn("2")
         first_line = data[0].split(' ',1)
+        log_warn("3")
         Type = first_line[0]
+        log_warn("4")
         
         if Type == 'confirm':
             if len(first_line) > 1:
@@ -156,7 +156,17 @@ class _ServerHandler(Thread):
             return
 
         if Type == 'setInfo':
-            self.doneInfo = first_line[1]
+            log_warn("5")
+            args = {}
+            log_warn("6")
+            for line in data[1:]:
+                log_warn("7")
+                line = line.split(' ', 1)
+                log_warn("8")
+                args[line[0]] = line[1]
+                log_warn("9")
+            self.doneInfo = args
+            log_warn("10")
             return
 
         if Type == 'call':
@@ -223,7 +233,7 @@ class Proxy:
         log_warn('server init')
         Proxy._server.start()
         log_warn('server started')
-        Proxy._pluginData = _deserialize(Proxy._wait())
+        Proxy._pluginData = Proxy._wait()
         log_warn('got data from server')
 
     @_log_err
