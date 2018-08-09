@@ -137,7 +137,7 @@ setConfigField("dependencies", "python3")
 setConfigField("author", "DeskChan Project <support@deskchan.info> (http://deskchan.info)")
 setConfigField("short-description", {
                    "ru": "ДескЧан плагин: Игра в 'Города'",
-                   "en": "DeskChan plagin: game 'cities'"
+                   "en": "DeskChan plugin: game 'cities'"
                })
 setConfigField("name", {
                    "ru": "Игра в 'Города'",
